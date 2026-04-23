@@ -1,0 +1,438 @@
+[gd_scene load_steps=13 format=3 uid="uid://bwqid7j6bkb27"]
+
+[ext_resource type="PackedScene" uid="uid://cgq7n1figlpu3" path="res://godot_ap/ui/base_client.tscn" id="1_0qqkj"]
+[ext_resource type="Script" uid="uid://csfxvsvcas4e6" path="res://scripts/graverobber.gd" id="2_hqc82"]
+[ext_resource type="Script" uid="uid://dap4i1hutdbxo" path="res://scripts/board.gd" id="2_tvhih"]
+[ext_resource type="Script" uid="uid://dj1wi853l1wnl" path="res://scripts/menu_back.gd" id="3_rxuat"]
+[ext_resource type="PackedScene" uid="uid://b12mndjkrdbdb" path="res://scenes/tile_b2.tscn" id="3_tvhih"]
+[ext_resource type="Texture2D" uid="uid://kdrrdt7xk0fr" path="res://assets/textures/board/p1_dark.png" id="3_w7mup"]
+[ext_resource type="Texture2D" uid="uid://b0u2rk0ovfa2n" path="res://assets/textures/board/p1_light.png" id="4_0d7io"]
+[ext_resource type="Texture2D" uid="uid://ljwenl2wfoc3" path="res://assets/textures/board/p2_dark.png" id="4_xokjh"]
+[ext_resource type="Texture2D" uid="uid://ttymu5wlsw5r" path="res://assets/textures/board/p2_light.png" id="5_hqc82"]
+[ext_resource type="PackedScene" uid="uid://b3nxvfbefa5kb" path="res://scenes/tile_b1.tscn" id="6_xokjh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqc82"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590167, 1)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0, 0, 0, 1)
+expand_margin_left = 16.0
+expand_margin_top = 16.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rxuat"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[node name="GraverobberClient" instance=ExtResource("1_0qqkj")]
+
+[node name="Tabs" parent="." index="0"]
+current_tab = 2
+
+[node name="Console" parent="Tabs" index="1"]
+visible = false
+
+[node name="Graverobber" type="MarginContainer" parent="Tabs" index="3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(536, 371)
+layout_mode = 2
+script = ExtResource("2_hqc82")
+metadata/_tab_index = 2
+
+[node name="Gameview" type="HBoxContainer" parent="Tabs/Graverobber" index="0"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="PlayersActions" type="VBoxContainer" parent="Tabs/Graverobber/Gameview" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 96
+alignment = 1
+
+[node name="TopBox" type="Panel" parent="Tabs/Graverobber/Gameview/PlayersActions" index="0"]
+custom_minimum_size = Vector2(256, 216)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hqc82")
+
+[node name="Text" type="RichTextLabel" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox" index="0"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebugInfo" type="GridContainer" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox" index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="LabelState" type="Label" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rxuat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rxuat")
+text = "state:"
+
+[node name="DebugState" type="Label" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rxuat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rxuat")
+text = "WaitForGame"
+
+[node name="LabelRotation" type="Label" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rxuat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rxuat")
+text = "tile rotation:"
+
+[node name="DebugRotation" type="Label" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rxuat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rxuat")
+text = "South"
+
+[node name="LabelRecord" type="Label" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rxuat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rxuat")
+text = "record type:"
+
+[node name="DebugRecord" type="ColorRect" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="5"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+color = Color(0, 0.502, 0, 1)
+
+[node name="LabelObjects" type="Label" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rxuat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rxuat")
+text = "objects:"
+
+[node name="DebugObjects" type="CheckButton" parent="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo" index="7"]
+layout_mode = 2
+
+[node name="BottomBox" type="Panel" parent="Tabs/Graverobber/Gameview/PlayersActions" index="1"]
+custom_minimum_size = Vector2(256, 216)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hqc82")
+
+[node name="Text" type="RichTextLabel" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="0"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuPlayer" type="VBoxContainer" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="1"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ButtonMove" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "MOVE"
+alignment = 0
+
+[node name="ButtonDig" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "DIG"
+alignment = 0
+
+[node name="ButtonSkip" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer" index="2"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SKIP"
+alignment = 0
+
+[node name="ButtonBackToRecord" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer" index="3"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BACK"
+alignment = 0
+
+[node name="MenuRecord" type="VBoxContainer" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ButtonContinue" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord" index="0"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CONTINUE"
+alignment = 0
+
+[node name="ButtonRecord" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord" index="1"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "RECORD"
+alignment = 0
+
+[node name="ButtonQuit" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord" index="2"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "QUIT
+"
+alignment = 0
+
+[node name="ButtonPlaceholder" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord" index="3"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "
+"
+alignment = 0
+
+[node name="MenuBack" type="VBoxContainer" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="3"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_rxuat")
+
+[node name="Text" type="RichTextLabel" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuBack" index="0"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuBack" index="1"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BACK"
+alignment = 0
+
+[node name="ButtonNewGame" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="4"]
+layout_mode = 1
+offset_right = 192.0
+offset_bottom = 48.0
+text = "Start Game"
+alignment = 0
+
+[node name="GameBoard" type="VBoxContainer" parent="Tabs/Graverobber/Gameview" index="1"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Panel2" type="Panel" parent="Tabs/Graverobber/Gameview/GameBoard" index="0"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hqc82")
+
+[node name="BoardP2" type="GridContainer" parent="Tabs/Graverobber/Gameview/GameBoard/Panel2" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 8
+script = ExtResource("2_tvhih")
+texture_dark = ExtResource("4_xokjh")
+texture_light = ExtResource("5_hqc82")
+
+[node name="Tile" parent="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2" index="0" instance=ExtResource("3_tvhih")]
+modulate = Color(1.3655106, 1.3655106, 1.3655106, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_xokjh")
+is_record_tile = true
+
+[node name="Panel1" type="Panel" parent="Tabs/Graverobber/Gameview/GameBoard" index="1"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hqc82")
+
+[node name="BoardP1" type="GridContainer" parent="Tabs/Graverobber/Gameview/GameBoard/Panel1" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 8
+script = ExtResource("2_tvhih")
+texture_dark = ExtResource("3_w7mup")
+texture_light = ExtResource("4_0d7io")
+
+[node name="Tile" parent="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1" index="0" instance=ExtResource("6_xokjh")]
+layout_mode = 2
+texture_normal = ExtResource("3_w7mup")
+show_objects = true
+
+[connection signal="toggled" from="Tabs/Graverobber/Gameview/PlayersActions/TopBox/DebugInfo/DebugObjects" to="Tabs/Graverobber" method="_on_debug_objects_toggled"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer/ButtonMove" to="Tabs/Graverobber" method="_on_button_move_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer/ButtonDig" to="Tabs/Graverobber" method="_on_button_dig_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer/ButtonSkip" to="Tabs/Graverobber" method="_on_button_skip_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuPlayer/ButtonBackToRecord" to="Tabs/Graverobber" method="_on_button_back_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord/ButtonContinue" to="Tabs/Graverobber" method="_on_button_continue_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord/ButtonRecord" to="Tabs/Graverobber" method="_on_button_record_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord/ButtonQuit" to="Tabs/Graverobber" method="_on_button_quit_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuBack/Button" to="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuBack" method="_on_button_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/ButtonNewGame" to="Tabs/Graverobber" method="_on_button_new_game_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21025" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21025" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21026" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21026" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21027" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21027" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21028" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21028" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21029" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21029" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21030" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21030" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21031" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21031" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21032" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21032" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21033" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21033" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21034" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21034" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21035" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21035" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21036" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21036" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21037" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21037" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21038" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21038" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21039" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21039" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21040" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21040" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21041" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21041" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21042" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21042" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21043" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21043" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21044" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21044" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21045" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21045" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21046" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21046" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21047" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21047" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21048" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21048" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21049" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21049" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21050" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21050" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21051" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21051" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21052" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21052" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21053" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21053" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21054" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21054" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21055" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21055" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21056" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21056" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21057" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21057" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21058" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21058" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21059" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21059" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21060" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21060" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21061" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21061" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21062" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21062" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21063" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21063" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21064" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21064" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21065" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21065" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21066" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21066" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21067" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21067" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21068" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21068" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21069" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21069" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21070" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21070" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21071" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21071" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21072" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21072" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21073" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21073" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21074" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21074" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21075" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21075" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21076" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21076" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21077" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21077" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21078" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21078" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21079" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21079" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21080" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21080" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21081" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21081" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21082" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21082" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21083" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21083" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21084" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21084" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21085" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21085" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21086" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21086" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21087" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21087" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21088" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21088" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21089" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21089" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21090" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21090" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21091" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21091" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21092" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21092" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21093" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21093" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21094" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21094" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21095" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21095" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21096" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21096" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21097" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21097" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21098" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21098" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21099" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21099" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21100" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21100" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21101" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21101" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21102" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21102" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21103" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21103" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21104" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21104" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21105" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21105" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21106" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21106" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21107" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21107" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21108" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21108" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21109" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21109" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21110" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21110" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21111" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21111" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21112" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21112" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21113" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21113" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21114" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21114" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21115" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21115" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21116" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21116" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21117" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21117" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21118" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21118" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21119" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21119" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21120" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21120" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21121" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21121" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21122" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21122" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21123" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21123" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21124" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21124" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21125" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21125" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21126" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21126" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21127" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21127" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21128" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21128" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21129" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21129" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21130" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21130" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21131" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21131" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21132" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21132" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21133" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21133" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21134" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21134" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21135" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21135" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21136" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21136" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21137" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21137" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21138" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21138" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21139" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21139" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21140" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21140" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21141" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21141" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21142" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21142" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21143" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21143" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21144" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21144" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21145" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21145" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21146" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21146" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21147" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21147" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21148" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21148" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21149" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21149" method="_on_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21150" to="Tabs/Graverobber/Gameview/GameBoard/Panel1/BoardP1/@TextureButton@21150" method="_on_pressed"]
+
+[editable path="Tabs/Console"]
