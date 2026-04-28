@@ -238,12 +238,24 @@ size_flags_horizontal = 0
 text = "BACK"
 alignment = 0
 
-[node name="ButtonNewGame" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="4"]
+[node name="MenuNew" type="VBoxContainer" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox" index="4"]
 layout_mode = 1
-offset_right = 192.0
-offset_bottom = 48.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonNewGame" type="Button" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuNew" index="0"]
+layout_mode = 2
 text = "Start Game"
 alignment = 0
+
+[node name="DebugRandom" type="CheckButton" parent="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuNew" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "random"
 
 [node name="GameBoard" type="VBoxContainer" parent="Tabs/Graverobber/Gameview" index="1"]
 layout_mode = 2
@@ -307,7 +319,7 @@ show_objects = true
 [connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord/ButtonRecord" to="Tabs/Graverobber" method="_on_button_record_pressed"]
 [connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuRecord/ButtonQuit" to="Tabs/Graverobber" method="_on_button_quit_pressed"]
 [connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuBack/Button" to="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuBack" method="_on_button_pressed"]
-[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/ButtonNewGame" to="Tabs/Graverobber" method="_on_button_new_game_pressed"]
+[connection signal="pressed" from="Tabs/Graverobber/Gameview/PlayersActions/BottomBox/MenuNew/ButtonNewGame" to="Tabs/Graverobber" method="_on_button_new_game_pressed"]
 [connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21025" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21025" method="_on_pressed"]
 [connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21026" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21026" method="_on_pressed"]
 [connection signal="pressed" from="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21027" to="Tabs/Graverobber/Gameview/GameBoard/Panel2/BoardP2/@TextureButton@21027" method="_on_pressed"]

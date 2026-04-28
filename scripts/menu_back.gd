@@ -22,3 +22,4 @@ func show_and_edit(text: String, state: Graverobber.GameState):
 func _on_button_pressed() -> void:
 	label.text = ""
 	GR.state = previous_state
+	GR.board1.reset_available_state()

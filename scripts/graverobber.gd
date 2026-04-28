@@ -6,10 +6,10 @@ class_name Graverobber extends MarginContainer
 
 @onready var text_p2: RichTextLabel = $Gameview/PlayersActions/TopBox/Text
 @onready var text_p1: RichTextLabel = $Gameview/PlayersActions/BottomBox/Text
+@onready var menu_player: VBoxContainer = $Gameview/PlayersActions/BottomBox/MenuPlayer
+@onready var menu_record: VBoxContainer = $Gameview/PlayersActions/BottomBox/MenuRecord
 @onready var menu_back: MenuBack = $Gameview/PlayersActions/BottomBox/MenuBack
-@onready var menu_player: BoxContainer = $Gameview/PlayersActions/BottomBox/MenuPlayer
-@onready var menu_record: BoxContainer = $Gameview/PlayersActions/BottomBox/MenuRecord
-@onready var button_new_game: Button = $Gameview/PlayersActions/BottomBox/ButtonNewGame
+@onready var menu_new: VBoxContainer = $Gameview/PlayersActions/BottomBox/MenuNew
 
 var state: GameState = GameState.WaitForGame:
 	set(value):
@@ -28,7 +28,7 @@ var obstacle_type: TileObstacles:
 		var obstacle_name: String = TileObstacles.keys()[value].to_lower().replace("_", " ")
 		update_text_boxes("Place your %s."%obstacle_name, "")
 var obstacle_rotation: TileRotation
-var record_type: RecordState = RecordState.FREE
+var record_type: RecordState = RecordState.Free
 
 
 # Called when the node enters the scene tree for the first time.
@@ -56,13 +56,13 @@ func _process(_delta: float) -> void:
 
 func _change_menu():
 	text_p1.hide()
-	menu_back.hide()
 	menu_player.hide()
 	menu_record.hide()
-	button_new_game.hide()
+	menu_back.hide()
+	menu_new.hide()
 	match(state):
 		GameState.WaitForGame:
-			button_new_game.show()
+			menu_new.show()
 		GameState.MenuPlay:
 			menu_player.show()
 		GameState.MenuRecordPre, GameState.MenuRecordPost:
@@ -80,8 +80,6 @@ func _change_menu():
 			pass
 		_:
 			print("Unknown GameState: ", state)
-
-
 
 func player_tile_pressed(coord: Vector2, is_available: bool):
 	match(state):
@@ -168,20 +166,20 @@ func _place_player_obstacle(coord: Vector2):
 		return
 	
 	if obstacle_type == TileObstacles.Third_Grave:
-		_place_bot_obstacles()
 		state = GameState.MenuRecordPre
 		return
 	
 	obstacle_type = (obstacle_type + 1) as TileObstacles
 
-func _place_bot_obstacles():
+# Used for bot and player-random placements
+func _auto_place_obstacles(board: Board):
 	var coord: Vector2
 	for i in range(4):
 		obstacle_type = i as TileObstacles
 		while(true):
 			coord = Vector2(rng.randi_range(0, 7), rng.randi_range(0, 7))
 			obstacle_rotation = rng.randi_range(0, 3) as TileRotation
-			if _try_place_at(coord, board2):
+			if _try_place_at(coord, board):
 				break
 
 func _try_move_to(coord: Vector2, is_available: bool) -> void:
@@ -227,7 +225,33 @@ func _try_dig_at(coord: Vector2, is_available: bool) -> void:
 	# Not next to player
 	if !is_available:
 		return
-	print(coord)
+	
+	var temp_x = b2_red_pos.x + (coord.x - b1_red_pos.x)
+	var temp_y = b2_red_pos.y + (coord.y - b1_red_pos.y)
+	
+	var b1_tile: Tile = board1.all_tiles[coord.x][coord.y] as Tile
+	b1_tile.objects = b1_tile.objects | TileObjects.Hole as TileObjects
+	
+	if (temp_x < 0 or temp_x > 7 or temp_y < 0 or temp_y > 7):
+		# if dig outside, show temporarily where it was dug "There was nowhere to dig."
+		pass
+	else:
+		var b2_tile: TileB2 = board2.all_tiles[temp_x][temp_y] as TileB2
+		if b2_tile.objects & TileObjects.Windmill or b2_tile.objects & TileObjects.Tombstone:
+			b2_tile.recorded_state = RecordState.Block
+			#"There was something in the way."
+		else:
+			b2_tile.recorded_state = RecordState.Dug
+			b2_tile.objects = b2_tile.objects | TileObjects.Hole as TileObjects
+			if b2_tile.objects & TileObjects.Dirt:
+				#"Something was there! But what?"
+				pass
+			else:
+				#"Player X reported that nothing was found there."
+				pass
+	#"Player X dug <green>Y</green>."
+	state = GameState.MenuRecordPost
+	board1.reset_available_state()
 
 func update_red_position(coord: Vector2, is_record_tile: bool):
 	if !is_record_tile:
@@ -262,6 +286,12 @@ func is_board_highlighted() -> bool:
 
 
 func _on_button_new_game_pressed() -> void:
+	_auto_place_obstacles(board2)
+	if (%DebugRandom.button_pressed):
+		_auto_place_obstacles(board1)
+		state = GameState.MenuRecordPre
+		return
+	
 	state = GameState.PlacingObstacles
 	obstacle_type = TileObstacles.Windmill
 	obstacle_rotation = TileRotation.South
@@ -277,7 +307,7 @@ func _on_button_dig_pressed() -> void:
 func _on_button_skip_pressed() -> void:
 	state = GameState.WaitForTurn
 
-func _on_button_back_to_record_pressed() -> void:
+func _on_button_back_pressed() -> void:
 	state = GameState.MenuRecordPre
 
 func _on_button_continue_pressed() -> void:
@@ -322,17 +352,17 @@ enum GameState {
 
 enum RecordState {
 	#Default; No override (gray checkered tile)
-	UNKNOWN = -1,
+	Unknown = -1,
 	#Walkable space; Green tile
-	FREE,
+	Free,
 	#Space already dug; Brown tile
-	DUG,
+	Dug,
 	#Space blocked by Windmill or Tombstone; Black tile
-	BLOCK,
+	Block,
 	#Red player (Human); Red tile
-	RED,
+	Red,
 	#White player (Bot); White tile
-	WHITE
+	White
 }
 
 enum TileObjects {
@@ -346,6 +376,7 @@ enum TileObjects {
 	WhiteDirt = 6,
 	RedHole = 9,
 	WhiteHole = 10,
+	Dug = 12,
 	RedDug = 13,
 	WhiteDug = 14,
 	

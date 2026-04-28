@@ -67,6 +67,8 @@ func _update_display() -> void:
 			label.text = "🔴"
 		Graverobber.TileObjects.WhiteHole:
 			label.text = "⚪"
+		Graverobber.TileObjects.Dug:
+			label.text = "🟤"
 		Graverobber.TileObjects.RedDug:
 			label.text = "❗"
 		Graverobber.TileObjects.WhiteDug:
